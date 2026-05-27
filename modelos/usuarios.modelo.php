@@ -6,61 +6,23 @@ require_once "conexion.php";
 class ModeloUsuarios
 {
 
-<<<<<<< HEAD
-// Ingresar usuario al sistema (login)
-
+    // Ingresar usuario al sistema (login)
     static public function mdlIngresarUsuario($documento){
-=======
-
-    // ************************************
-    // LOGIN DE USUARIO 
-    // ************************************
-    static public function mdlIngresarUsuario($documento)
-    {
->>>>>>> cd6e9e04bec2edb82d3a035275c06e3363346719
         $stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios WHERE documento_id = :documento");
         $stmt->bindParam(":documento", $documento, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
     }  //fin del metodo mdlIngresarUsuario
 
-<<<<<<< HEAD
     // Listar usuarios
     //ventana de usuarios, se muestra la tabla con los usuarios registrados en el sistema
     static public function mdlListarUsuarios(){
         $stmt = Conexion::conectar()->prepare("SELECT * FROM usuarios");
-=======
-
-    // ************************************
-    // LISA DE DE USUARIOS EN LA VENTANA PRINCIPAL
-    // ************************************    
-    static public function mdlListarUsuarios()
-    {
-        $stmt = Conexion::conectar()->prepare("SELECT u.*, f.codigo FROM usuarios u LEFT JOIN fichas f ON f.id_ficha = u.ficha_id WHERE u.rol<>'Administrador';");
->>>>>>> cd6e9e04bec2edb82d3a035275c06e3363346719
         $stmt->execute();
         return $stmt->fetchAll();
     }
     // fin del metodo mdlListarUsuarios
 
-<<<<<<< HEAD
-    // Mostrar usuario
-    // se muestra la información del usuario registrado en el sistema, se utiliza para validar que el número de documento no se repita
-    static public function mdlMostrarUsuarios($tabla, $item, $valor){
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :valor");
-        $stmt->bindParam(":valor", $valor, PDO::PARAM_STR);
-        error_log("valor desde modelo". $valor);
-        error_log("item desde modelo". $item);
-        $stmt->execute();
-        return $stmt->fetch();
-    }
-    // fin del metodo mdlMostrarUsuarios
-
-    //agregar nuevo usuariio al sistema
-    static public function mdlAgregarUsuario($tabla, $datos){
-        
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (tipo_documento, documento_id, nombres, apellidos, correo, fecha_nacimiento, rol, password) VALUES (:tipoDocumento, :documentoId, :nombres, :apellidos, :correo, :fechaNacimiento, :rol, :documentoId)");
-=======
     // ************************************
     // LISTA DE FICHAS
     // ************************************    
@@ -78,7 +40,6 @@ class ModeloUsuarios
     {
 
         $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (tipo_documento, documento_id, nombres, apellidos, correo, fecha_nacimiento, rol, password, ficha_id) VALUES (:tipoDocumento, :documentoId, :nombres, :apellidos, :correo, :fechaNacimiento, :rol, :password, :ficha_id)");
->>>>>>> cd6e9e04bec2edb82d3a035275c06e3363346719
         $stmt->bindParam(":tipoDocumento", $datos["tipoDocumento"], PDO::PARAM_STR);
         $stmt->bindParam(":documentoId", $datos["documentoId"], PDO::PARAM_STR);
         $stmt->bindParam(":nombres", $datos["nombres"], PDO::PARAM_STR);
