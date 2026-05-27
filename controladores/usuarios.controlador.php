@@ -2,6 +2,8 @@
 
 class ControladorUsuarios{
 
+/**  */
+// Ingresar usuario al sistema (login)
     public function ctrIngresarUsuario(){
         if (isset($_POST["ingDocumento"])){
             if (
@@ -27,11 +29,16 @@ class ControladorUsuarios{
         }
     } //fin del metodo de ingresar usuario
 
+
+    // Listar usuarios
+    //ventana de usuarios, se muestra la tabla con los usuarios registrados en el sistema
     static public function ctrListarUsuarios(){
         $respuesta= ModeloUsuarios::mdlListarUsuarios();
         return $respuesta;
     } //fin del metodo ctrListarUsuarios
 
+
+    //agregar nuevo usuariio al sistema
     public function ctrAgregarUsuario(){
 
         
@@ -96,5 +103,17 @@ class ControladorUsuarios{
               }
         }  // fin del isset
     }
+// fin del metodo ctrAgregarUsuario
+
+// Mostrar usuario
+// se muestra la información del usuario registrado en el sistema, se utiliza para validar que el número de documento no se repita
+    static public function ctrMostrarUsuarios($item, $valor){
+        $tabla = "usuarios";
+        $respuesta = ModeloUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
+        return $respuesta;
+        
+
+    }
+    // fin del metodo ctrMostrarUsuarios
 
 }//fin de la clase ControladorUsuarios
