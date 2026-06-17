@@ -39,7 +39,7 @@ class ModeloUsuarios
     static public function mdlAgregarUsuario($tabla, $datos)
     {
 
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (tipo_documento, documento_id, nombres, apellidos, correo, fecha_nacimiento, rol, password, ficha_id) VALUES (:tipoDocumento, :documentoId, :nombres, :apellidos, :correo, :fechaNacimiento, :rol, :password, :ficha_id)");
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (tipo_documento, documento_id, nombres, apellidos, correo, fecha_nacimiento, rol, password, ficha_id, foto) VALUES (:tipoDocumento, :documentoId, :nombres, :apellidos, :correo, :fechaNacimiento, :rol, :password, :ficha_id, :foto)");
         $stmt->bindParam(":tipoDocumento", $datos["tipoDocumento"], PDO::PARAM_STR);
         $stmt->bindParam(":documentoId", $datos["documentoId"], PDO::PARAM_STR);
         $stmt->bindParam(":nombres", $datos["nombres"], PDO::PARAM_STR);
@@ -49,6 +49,7 @@ class ModeloUsuarios
         $stmt->bindParam(":rol", $datos["rol"], PDO::PARAM_STR);
         $stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
         $stmt->bindParam(":ficha_id", $datos["ficha_id"], PDO::PARAM_INT);
+        $stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
         if ($stmt->execute()) {
             return "ok";
         } else {
@@ -71,7 +72,7 @@ class ModeloUsuarios
     // ************************************    
     static public function mdlEditarUsuario($tabla, $datos)
     {
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET tipo_documento = :tipoDocumento, documento_id = :documentoId, nombres = :nombres, apellidos = :apellidos, correo = :correo, fecha_nacimiento = :fechaNacimiento, rol = :rol, password = :password, ficha_id = :ficha_id WHERE id = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET tipo_documento = :tipoDocumento, documento_id = :documentoId, nombres = :nombres, apellidos = :apellidos, correo = :correo, fecha_nacimiento = :fechaNacimiento, rol = :rol, password = :password, ficha_id = :ficha_id, foto = :foto WHERE id = :id");
         
         $stmt->bindParam(":tipoDocumento", $datos["tipoDocumento"], PDO::PARAM_STR);
         $stmt->bindParam(":documentoId", $datos["documentoId"], PDO::PARAM_STR);
@@ -82,6 +83,27 @@ class ModeloUsuarios
         $stmt->bindParam(":rol", $datos["rol"], PDO::PARAM_STR);
         $stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
         $stmt->bindParam(":ficha_id", $datos["ficha_id"], PDO::PARAM_INT);
+        $stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+    }
+
+    // ************************************
+    // EDITAR PERFIL EN LA BD
+    // ************************************    
+    static public function mdlEditarPerfil($tabla, $datos)
+    {
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombres = :nombres, apellidos = :apellidos, password = :password, foto = :foto WHERE id = :id");
+        
+        $stmt->bindParam(":nombres", $datos["nombres"], PDO::PARAM_STR);
+        $stmt->bindParam(":apellidos", $datos["apellidos"], PDO::PARAM_STR);
+        $stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
+        $stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
         $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
